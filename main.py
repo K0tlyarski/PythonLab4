@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import cv2
 
 
+pd.options.mode.chained_assignment = None
 def create_DataFrame() -> pd.DataFrame:
     """This function takes data from 2 csv files and create dataframe with 2 columns"""
     df1 = pd.read_csv(os.path.join("/Users", "vadimkotlarskij", "Desktop", "Python", "Lab4TEST", "annotationtiger.csv"),
