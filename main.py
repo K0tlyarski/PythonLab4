@@ -65,3 +65,17 @@ def group_df(df: pd.DataFrame, class_mark: int) -> None:
     df['pixels'] = img_pixels
     df.groupby('pixels').count()
     print(df.pixels.describe())
+
+
+def create_histogram(df: pd.DataFrame, class_mark: int) -> list:
+    """This function creates histogram"""
+    df = mark_filter(df, class_mark)
+    df = df.sample()
+    for item in df['AbsolutePath']:
+        path = item
+    img = cv2.imread(path)
+    array = []
+    for number in range(0, 3):  # blue green reds
+        hist = cv2.calcHist([img], [number], None, [256], [0, 256])
+        array.append(hist)
+    return array
