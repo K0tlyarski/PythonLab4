@@ -43,3 +43,8 @@ def add_hwcColumns(df: pd.DataFrame) -> None:
     df['height'] = img_height
     df['width'] = img_width
     df['channel'] = img_channel
+
+
+def mark_filter(df: pd.DataFrame, class_mark: int) -> pd.DataFrame:
+    """This function selects all images with mark and returns a DataFrame filtered by mark"""
+    return df[df['mark'] == class_mark]
