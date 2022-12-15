@@ -18,3 +18,13 @@ def create_DataFrame() -> pd.DataFrame:
     df.rename(columns={0: 'AbsolutePath', 2: 'DatasetClass'}, inplace=True)
     return df
 
+
+def add_mark(df: pd.DataFrame) -> None:
+    """This function adds third column in dataframe - mark of image(1 or 0)"""
+    value = []
+    for item in df['DatasetClass']:
+        if item == 'tiger':
+            value.append(0)
+        else:
+            value.append(1)
+    df['mark'] = value
