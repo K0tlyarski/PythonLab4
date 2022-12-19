@@ -1,11 +1,13 @@
 import os
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 
-
 pd.options.mode.chained_assignment = None
+
+
 def create_DataFrame() -> pd.DataFrame:
     """This function takes data from 2 csv files and create dataframe with 2 columns"""
     df1 = pd.read_csv(os.path.join("/Users", "vadimkotlarskij", "Desktop", "Python", "Lab4TEST", "annotationtiger.csv"),
@@ -16,14 +18,14 @@ def create_DataFrame() -> pd.DataFrame:
         header=None)
     df = pd.concat([df1, df2], ignore_index=True)
     df.drop(1, axis=1, inplace=True)
-    df.rename(columns={0: 'AbsolutePath', 2: 'DatasetClass'}, inplace=True)
+    df.rename(columns={0: 'absolute_path', 2: 'dataset_class'}, inplace=True)
     return df
 
 
 def add_mark(df: pd.DataFrame) -> None:
     """This function adds third column in dataframe - mark of image(1 or 0)"""
     value = []
-    for item in df['DatasetClass']:
+    for item in df['dataset_class']:
         if item == 'tiger':
             value.append(0)
         else:
@@ -36,7 +38,7 @@ def add_hwcColumns(df: pd.DataFrame) -> None:
     img_width = []
     img_height = []
     img_channel = []
-    for item in df['AbsolutePath']:
+    for item in df['absolute_path']:
         img = cv2.imread(item)
         img_height.append(img.shape[0])
         img_width.append(img.shape[1])
@@ -60,7 +62,7 @@ def group_df(df: pd.DataFrame, class_mark: int) -> None:
     """This function groups data frame by new column (number of pixels) and outputs information about that"""
     df = mark_filter(df, class_mark)
     img_pixels = []
-    for item in df['AbsolutePath']:
+    for item in df['absolute_path']:
         img = cv2.imread(item)
         img_pixels.append(img.size)
     df['pixels'] = img_pixels
@@ -72,11 +74,11 @@ def create_histogram(df: pd.DataFrame, class_mark: int) -> list:
     """This function creates histogram"""
     df = mark_filter(df, class_mark)
     df = df.sample()
-    for item in df['AbsolutePath']:
+    for item in df['absolute_path']:
         path = item
     img = cv2.imread(path)
     array = []
-    for number in range(0, 3):  # blue green reds
+    for number in range(0, 3):
         hist = cv2.calcHist([img], [number], None, [256], [0, 256])
         array.append(hist)
     return array
